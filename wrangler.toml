@@ -1,0 +1,14 @@
+name = "sub-manager"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+AUTH_USER = "admin"
+AUTH_PASS = "password"
+
+[kv_namespaces]
+binding = "SUB"
+id = "your_kv_namespace_id"
+
+[build]
+command = "npm install"
