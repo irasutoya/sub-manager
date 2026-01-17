@@ -10,6 +10,10 @@ async function handleRequest(request) {
     return request.method === 'POST' ? handlePost(request) : handleHome(request)
   }
 
+  if (path === '/robots.txt') {
+    return handleRobots()
+  }
+
   const id = path.slice(1)
   return id ? handleSub(request, id) : new Response('Not Found', {status: 404})
 }
@@ -129,6 +133,12 @@ async function getSubs() {
   }))
 }
 
+function handleRobots() {
+  return new Response('User-agent: *\nDisallow: /', {
+    headers: {'Content-Type': 'text/plain; charset=utf-8'}
+  })
+}
+
 function generateHomeHTML(subs) {
   const list = subs.map(sub => {
     const regionsStr = sub.regions?.join(', ') || '无限制'
@@ -147,6 +157,7 @@ function generateHomeHTML(subs) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <title>订阅管理器</title>
   <style>
     * { box-sizing: border-box; }
